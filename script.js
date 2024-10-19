@@ -9,47 +9,50 @@ function getComputerChoice() {
 // console.log(getComputerChoice());
 
 function getHumanChoice() {
-    let msg = `Please enter 
-    'r' for Rock or 
-    'p' for Paper or 
-    's' for Scissors or
-    'x' for a random choice!`;
-    let input = prompt(msg, 'x');
-    if (input === 'r') {
+    let msg = `Please enter 'Rock' or 'Paper' or 'Scissors'!
+Or enter 'Random' for a random choice!`;
+    let input = prompt(msg, 'Random');
+    input = input.toLowerCase();
+
+    if (input === 'rock') {
         return 'Rock';
-    } else if (input === 'p') {
+    } else if (input.slice(0, 5) === 'paper') {
         return 'Paper';
-    } else if (input === 's') {
+    } else if (input[0] === 's') {
         return 'Scissors';
-    } else return getComputerChoice();
+    } else {
+        console.log(`Generating random choice for human...`);
+        return getComputerChoice();
+    }
 }
 // console.log(getHumanChoice());
 
 let humanScore = 0;
 let computerScore = 0;
 
-let computer = getComputerChoice();
-let human = getHumanChoice();
 
-if (computer !== human) {
-    if (computer === 'Rock') {
-        if (human === 'Paper') {
-            humanScore += 1;
-        } else computerScore += 1;
-    } else if (computer === 'Paper' && human === 'Scissors') {
-        humanScore++;
-    } else if (computer === 'Paper') computerScore++;
-    else if (computer === 'Scissors') {
-        if (human === 'Rock') humanScore++;
-        else computerScore++;
+function playRound(computer, human) {
+    if (computer !== human) {
+        if (computer === 'Rock') {
+            if (human === 'Paper') {
+                humanScore += 1;
+            } else computerScore += 1;
+        } else if (computer === 'Paper' && human === 'Scissors') {
+            humanScore++;
+        } else if (computer === 'Paper') computerScore++;
+        else if (computer === 'Scissors') {
+            if (human === 'Rock') humanScore++;
+            else computerScore++;
+        }
     }
+
+    let result = `Human chose ${human} and computer chose ${computer}.\n${humanScore} to ${computerScore} `;
+    if (humanScore > computerScore) result = result.concat(`Human Wins!`);
+    else if (humanScore < computerScore) result += `Computer Wins!`;
+    else result = result.concat(`No one lost!`);
+
+    return result;
 }
 
-let result;
-result = `Human chose ${human} and computer chose ${computer}.
-${humanScore} to ${computerScore} `;
-if (humanScore > computerScore) result = result.concat(`Human Wins!`);
-else if (humanScore < computerScore) result += `Computer Wins!`;
-else result = result.concat(`No one lost!`);
-
-console.log(result);
+let output = playRound(getComputerChoice(), getHumanChoice());
+console.log(output);
