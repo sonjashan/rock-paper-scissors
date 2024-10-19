@@ -27,8 +27,7 @@ Or enter 'Random' for a random choice!`;
 }
 // console.log(getHumanChoice());
 
-let humanScore = 0;
-let computerScore = 0;
+let humanScore, computerScore;
 
 
 function playRound(computer, human) {
@@ -46,13 +45,32 @@ function playRound(computer, human) {
         }
     }
 
-    let result = `Human chose ${human} and computer chose ${computer}.\n${humanScore} to ${computerScore} `;
-    if (humanScore > computerScore) result = result.concat(`Human Wins!`);
-    else if (humanScore < computerScore) result += `Computer Wins!`;
-    else result = result.concat(`No one lost!`);
-
+    let result = `Human chose ${human} and computer chose ${computer}.
+Current score is Human: ${humanScore} to Computer: ${computerScore}. `;
     return result;
 }
 
-let output = playRound(getComputerChoice(), getHumanChoice());
-console.log(output);
+function playGame() {
+    console.log(`We are playing a five round game!`);
+
+    humanScore = computerScore = 0;
+    let output;
+    output = playRound(getComputerChoice(), getHumanChoice());
+    console.log(output);
+    output = playRound(getComputerChoice(), getHumanChoice());
+    console.log(output);
+    output = playRound(getComputerChoice(), getHumanChoice());
+    console.log(output);
+    output = playRound(getComputerChoice(), getHumanChoice());
+    console.log(output);
+    output = playRound(getComputerChoice(), getHumanChoice());
+    console.log(output);
+
+    let result = `Congratulations! `;
+    if (humanScore > computerScore) result = result.concat(`Human Wins!`);
+    else if (humanScore < computerScore) result += `Computer Wins!`;
+    else result = result.concat(`No one lost!`);
+    return result;
+}
+
+console.log(playGame());
