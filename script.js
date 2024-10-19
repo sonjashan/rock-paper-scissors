@@ -10,7 +10,8 @@ function getComputerChoice() {
 
 function getHumanChoice() {
     let msg = `Please enter 'Rock' or 'Paper' or 'Scissors'!
-Or enter 'Random' for a random choice!`;
+Or enter 'Random' for a random choice!
+Input is case-insensitive.`;
     let input = prompt(msg, 'Random');
     input = input.toLowerCase();
 
