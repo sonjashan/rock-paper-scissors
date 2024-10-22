@@ -56,16 +56,10 @@ function playGame() {
 
     humanScore = computerScore = 0;
     let output;
-    output = playRound(getComputerChoice(), getHumanChoice());
-    console.log(output);
-    output = playRound(getComputerChoice(), getHumanChoice());
-    console.log(output);
-    output = playRound(getComputerChoice(), getHumanChoice());
-    console.log(output);
-    output = playRound(getComputerChoice(), getHumanChoice());
-    console.log(output);
-    output = playRound(getComputerChoice(), getHumanChoice());
-    console.log(output);
+    for (let i = 0; i < 5; i++) {
+        output = playRound(getComputerChoice(), getHumanChoice());
+        console.log(output);
+    }
 
     let result = `Congratulations! `;
     if (humanScore > computerScore) result = result.concat(`Human Wins!`);
