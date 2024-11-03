@@ -27,34 +27,45 @@ Current score is Human: ${humanScore} to Computer: ${computerScore}. `;
     return result;
 }
 
-let counter = 5;
-console.log(`We are playing a ${counter} round game!`);
-let humanScore, computerScore, humanChoice, output;
-humanScore = computerScore = 0;
+let humanScore, computerScore, humanChoice, output, counter;
 let endEvent = new CustomEvent('gameover');
+
+function init() {
+    counter = 5;
+    console.log(`*New Game* We are playing a ${counter} round game!`);
+    humanScore = computerScore = 0;
+}
 
 let rockBtn = document.createElement("button");
 rockBtn.textContent = "Rock";
 let paperBtn = document.createElement("button");
 paperBtn.textContent = "Paper";
-let ScissorsBtn = document.createElement("button");
-ScissorsBtn.textContent = "Scissors";
+let scissorsBtn = document.createElement("button");
+scissorsBtn.textContent = "Scissors";
 document.body.appendChild(rockBtn);
 document.body.appendChild(paperBtn);
-document.body.appendChild(ScissorsBtn);
+document.body.appendChild(scissorsBtn);
 
 let btns = document.querySelectorAll("button");
 btns.forEach(function (button) {
     button.addEventListener("click", function (e) {
-        humanChoice = e.target.textContent;
-        output = playRound(getComputerChoice(), humanChoice);
-        console.log(output);
-        counter--;
-        if (!counter) {
-            document.body.dispatchEvent(endEvent);
+        if (counter) {
+            humanChoice = e.target.textContent;
+            output = playRound(getComputerChoice(), humanChoice);
+            console.log(output);
+            counter--;
+            if (!counter) {
+                document.body.dispatchEvent(endEvent);
+            }
         }
     });
 });
+
+init();
+let newBtn = document.createElement("button");
+newBtn.textContent = "New game!";
+newBtn.addEventListener("click", init);
+document.body.appendChild(newBtn);
 
 document.body.addEventListener("gameover", function () {
     let result = `Congratulations! `;
