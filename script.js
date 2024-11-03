@@ -6,30 +6,6 @@ function getComputerChoice() {
     else if (num > 3) return `Paper`;
     else return `Scissors`;
 }
-// console.log(getComputerChoice());
-
-function getHumanChoice() {
-    let msg = `Please enter 'Rock' or 'Paper' or 'Scissors'!
-Or enter 'Random' for a random choice!
-Input is case-insensitive.`;
-    let input = prompt(msg, 'Random');
-    input = input.toLowerCase();
-
-    if (input === 'rock') {
-        return 'Rock';
-    } else if (input.slice(0, 5) === 'paper') {
-        return 'Paper';
-    } else if (input[0] === 's') {
-        return 'Scissors';
-    } else {
-        console.log(`Generating random choice for human...`);
-        return getComputerChoice();
-    }
-}
-// console.log(getHumanChoice());
-
-let humanScore, computerScore;
-
 
 function playRound(computer, human) {
     if (computer !== human) {
@@ -51,21 +27,41 @@ Current score is Human: ${humanScore} to Computer: ${computerScore}. `;
     return result;
 }
 
-function playGame() {
-    console.log(`We are playing a five round game!`);
+let counter = 5;
+console.log(`We are playing a ${counter} round game!`);
+let humanScore, computerScore, humanChoice, output;
+humanScore = computerScore = 0;
+let endEvent = new CustomEvent('gameover');
 
-    humanScore = computerScore = 0;
-    let output;
-    for (let i = 0; i < 5; i++) {
-        output = playRound(getComputerChoice(), getHumanChoice());
+let rockBtn = document.createElement("button");
+rockBtn.textContent = "Rock";
+let paperBtn = document.createElement("button");
+paperBtn.textContent = "Paper";
+let ScissorsBtn = document.createElement("button");
+ScissorsBtn.textContent = "Scissors";
+document.body.appendChild(rockBtn);
+document.body.appendChild(paperBtn);
+document.body.appendChild(ScissorsBtn);
+
+let btns = document.querySelectorAll("button");
+btns.forEach(function (button) {
+    button.addEventListener("click", function (e) {
+        humanChoice = e.target.textContent;
+        output = playRound(getComputerChoice(), humanChoice);
         console.log(output);
-    }
+        counter--;
+        if (!counter) {
+            document.body.dispatchEvent(endEvent);
+        }
+    });
+});
 
+document.body.addEventListener("gameover", function () {
     let result = `Congratulations! `;
     if (humanScore > computerScore) result = result.concat(`Human Wins!`);
     else if (humanScore < computerScore) result += `Computer Wins!`;
     else result = result.concat(`No one lost!`);
-    return result;
-}
+    console.log(result);
+});
 
-console.log(playGame());
+
